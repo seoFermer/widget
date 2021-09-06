@@ -8,7 +8,7 @@ class Cart
     public Discount $discount;
     public Products $product;
 
-    public float $productCost = 0;
+    public float $totalCost = 0;
     public array $items = [];
 
     public function __construct()
@@ -27,17 +27,17 @@ class Cart
     {
         foreach ($this->items as $code => $count) {
             $product = $this->product->getProduct($code);
-            $this->productCost += $product['price'] * $count;
+            $this->totalCost += $product['price'] * $count;
         }
 
         $discount = $this->discount->getDiscountByProduct($this->items);
-        $totalCost = $this->productCost - $discount;
-        $deliveryCosts = $this->delivery->getDeliveryCosts($totalCost);
-        $totalCost = $totalCost + $deliveryCosts;
+        $this->totalCost = $this->totalCost - $discount;
+        $deliveryCosts = $this->delivery->getDeliveryCosts($this->totalCost);
+        $this->totalCost = $this->totalCost + $deliveryCosts;
 
-        $totalCost = round($totalCost, 2);
+        return round($this->totalCost, 2);
 
-        return $totalCost;
+
     }
 
 }
