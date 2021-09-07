@@ -10,14 +10,8 @@ class Discount
 
         foreach ($products as $product) {
             if ($product['code'] == 'R01') {
-                $isQuantityEvent = $product['count'] % 2;
-                $count = $product['count'];
-                if ($isQuantityEvent != 0) {
-                    $count = $product['count'] - 1;
-                }
-                $quantityProductDiscount = intdiv($count, 2);
-
-                $discount = $quantityProductDiscount * $product['price'] * 0.50;
+                $count = $product['count'] % 2 != 0 ? $product['count'] - 1 :  $product['count'];
+                $discount = intdiv($count, 2) * $product['price'] * 0.50;
                 $discount = round($discount, 2);
             };
         }
