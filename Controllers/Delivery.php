@@ -4,7 +4,7 @@ namespace Controllers;
 
 class Delivery
 {
-    public function getDeliveryCosts($totalCosts)
+    public function discountFromCost($totalCosts)
     {
         $deliveryCosts = 4.95;
 

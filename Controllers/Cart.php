@@ -4,7 +4,6 @@ namespace Controllers;
 
 class Cart
 {
-    public array $product = [];
     public float $totalCost = 0;
     public array $items = [];
 
@@ -17,28 +16,31 @@ class Cart
 
     public function add($code)
     {
-        $this->items[$this->product[$code]]['count'] = empty($this->items[$this->product[$code]]) ? 1 : $this->items[$this->product[$code]]['count'] + 1;
+        if(empty($this->items[$code])){
+            $this->items[$code] = $this->product[$code];
+            $this->items[$code]['count'] = 1;
+        } else {
+            $this->items[$code]['count']++;
+        }
     }
 
     public function costOfProduct()
     {
-//        foreach ($this->items as $item) {
-//           var_dump($item);
-//        }
+        $cost = 0;
+        foreach ($this->items as $item) {
+          $cost += $item['count'] * $item['price'];
+        }
+
+        return $cost;
     }
 
-  /*  public function getTotalCost()
+    public function getTotalCost()
     {
-
-
-        $discount = $this->discount->buyOneRedWidget($this->items);
-        $this->totalCost = $this->totalCost - $discount;
-        $deliveryCosts = $this->delivery->getDeliveryCosts($this->totalCost);
-        $this->totalCost = $this->totalCost + $deliveryCosts;
+        $this->totalCost = $this->costOfProduct();
+        $this->totalCost -= $this->discount->buyOneRedWidget($this->items);
+        $this->totalCost += $this->delivery->discountFromCost($this->totalCost);
 
         return round($this->totalCost, 2);
-
-
-    }*/
+    }
 
 }

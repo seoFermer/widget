@@ -11,6 +11,7 @@ spl_autoload_register(function ($class) {
 $discount = new Discount();
 $delivery = new Delivery();
 
+//Products
 $product = [
     'R01' => [
         'code' => 'R01',
@@ -43,7 +44,8 @@ foreach ($baskets as $basket){
     foreach ($basket as $code){
         $cart->add($code);
     }
-    echo '<pre>'; print_r($cart->items);
+
+   echo $cart->getTotalCost() . '<br>';
 }
 
 

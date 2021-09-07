@@ -4,28 +4,24 @@ namespace Controllers;
 
 class Discount
 {
-
-    public function __construct()
-    {
-
-    }
-
     public function buyOneRedWidget($products)
     {
-       /* $discount = 0;
+        $discount = 0;
 
-        foreach ($products as $code => $count) {
-            if ($code == 'R01') {
-                $isQuantityEvent = $count % 2;
+        foreach ($products as $product) {
+            if ($product['code'] == 'R01') {
+                $isQuantityEvent = $product['count'] % 2;
+                $count = $product['count'];
                 if ($isQuantityEvent != 0) {
-                    $count = $count - 1;
+                    $count = $product['count'] - 1;
                 }
                 $quantityProductDiscount = intdiv($count, 2);
-                $product = $this->product->getProduct($code);
+
                 $discount = $quantityProductDiscount * $product['price'] * 0.50;
+                $discount = round($discount, 2);
             };
         }
 
-        return $discount;*/
+        return $discount;
     }
 }
