@@ -7,12 +7,12 @@ class Discount
 
     public function __construct()
     {
-        $this->product = new Products();
+
     }
 
-    public function getDiscountByProduct($products)
+    public function buyOneRedWidget($products)
     {
-        $discount = 0;
+       /* $discount = 0;
 
         foreach ($products as $code => $count) {
             if ($code == 'R01') {
@@ -26,6 +26,6 @@ class Discount
             };
         }
 
-        return $discount;
+        return $discount;*/
     }
 }

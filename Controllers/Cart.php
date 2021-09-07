@@ -4,33 +4,34 @@ namespace Controllers;
 
 class Cart
 {
-    public Delivery $delivery;
-    public Discount $discount;
-    public Products $product;
-
+    public array $product = [];
     public float $totalCost = 0;
     public array $items = [];
 
-    public function __construct()
+    public function __construct($product, $discount, $delivery)
     {
-        $this->delivery = new Delivery();
-        $this->discount = new Discount;
-        $this->product = new Products();
+        $this->product = $product;
+        $this->discount = $discount;
+        $this->delivery = $delivery;
     }
 
     public function add($code)
     {
-        $this->items[$code] = empty($this->items[$code]) ? 1 : $this->items[$code] + 1;
+        $this->items[$this->product[$code]]['count'] = empty($this->items[$this->product[$code]]) ? 1 : $this->items[$this->product[$code]]['count'] + 1;
     }
 
-    public function getTotalCost()
+    public function costOfProduct()
     {
-        foreach ($this->items as $code => $count) {
-            $product = $this->product->getProduct($code);
-            $this->totalCost += $product['price'] * $count;
-        }
+//        foreach ($this->items as $item) {
+//           var_dump($item);
+//        }
+    }
 
-        $discount = $this->discount->getDiscountByProduct($this->items);
+  /*  public function getTotalCost()
+    {
+
+
+        $discount = $this->discount->buyOneRedWidget($this->items);
         $this->totalCost = $this->totalCost - $discount;
         $deliveryCosts = $this->delivery->getDeliveryCosts($this->totalCost);
         $this->totalCost = $this->totalCost + $deliveryCosts;
@@ -38,6 +39,6 @@ class Cart
         return round($this->totalCost, 2);
 
 
-    }
+    }*/
 
 }
