@@ -1,15 +1,15 @@
 <?php
 
 use Controllers\Cart;
-use Controllers\Delivery;
-use Controllers\Discount;
+use Controllers\DeliveryRuleA;
+use Controllers\OffersRuleA;
+
+include_once ('Interfaces/DeliveryInterface.php');
+include_once ('Interfaces/OfferInterface.php');
 
 spl_autoload_register(function ($class) {
     include(__DIR__ . "/" . str_replace('\\', '/', $class . ".php"));
 });
-
-$discount = new Discount();
-$delivery = new Delivery();
 
 //Products
 $product = [
@@ -38,14 +38,17 @@ $baskets = [
     [ 'B01', 'B01', 'R01', 'R01', 'R01']
 ];
 
+$deliveryRules = [new DeliveryRuleA()];
+$offersRules = [new OffersRuleA()];
+
 //Implementation
 foreach ($baskets as $basket){
-    $cart = new Cart($product, $discount, $delivery);
+    $cart = new Cart($product, $deliveryRules, $offersRules);
     foreach ($basket as $code){
         $cart->add($code);
     }
 
-   echo $cart->getTotalCost() . '<br>';
+   echo $cart->getTotalAmount() . '<br>';
 }
 
 
